@@ -1,0 +1,1 @@
+export const CommentSelector = (state) => state.comment;

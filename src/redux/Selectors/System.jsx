@@ -1,0 +1,1 @@
+export const SystemSelector = (state) => state.system;

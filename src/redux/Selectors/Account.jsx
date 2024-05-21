@@ -1,0 +1,1 @@
+export const AccountSelector = (state) => state.account;

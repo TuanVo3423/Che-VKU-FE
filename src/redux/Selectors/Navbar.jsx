@@ -1,0 +1,1 @@
+export const NavbarSelector = (state) => state.navbar;
