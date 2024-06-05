@@ -4,7 +4,7 @@ import {
   CreditCard,
   Gift,
   HeartStraight,
-  ShoppingCart,
+  Heart,
   SignOut,
   Trash,
   UserFocus,
@@ -81,7 +81,7 @@ export default function Wishlist() {
                 to={"/cart"}
                 className="flex gap-x-2 justify-start items-center medium capitalize text-gray-800 font-medium hover:text-primary transition"
               >
-                <ShoppingCart size={20} weight="bold" />
+                <Heart size={20} weight="bold" />
                 my cartlist
               </Link>
             </div>

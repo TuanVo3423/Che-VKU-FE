@@ -1,24 +1,27 @@
 import React, { useState } from "react";
 import { CircleSpinnerOverlay } from "react-spinner-overlay";
-import { sendEmailToAdmin } from "../api";
+import { sendEmailAfterCheckout, sendEmailToAdmin } from "../api";
 import { SystemReducer } from "../redux/Reducers/System";
 import { useDispatch } from "react-redux";
+import emailjs from "@emailjs/browser";
 
 export default function Contact() {
+  emailjs.init("oGf2xSghLt1ka_BVe");
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
 
-  const handleSendMailToAdmin = (e) => {
+  const handleSendMailToAdmin = async (e) => {
+    const serviceID = "service_jv500u5";
+    const templateID = "template_f68zv0n";
     e.preventDefault();
     setLoading(true);
-
-    const sendemailtoadmin = sendEmailToAdmin({
+    const params = {
       email: e.target["email-address"].value,
       name: e.target["name"].value,
-      pass: e.target["pass"].value,
-      country: e.target["country"].value,
-      message: e.target["message"].value,
-    })
+      content: e.target["message"].value,
+    };
+    await emailjs
+      .send(serviceID, templateID, params)
       .then((res) => {
         dispatch(
           SystemReducer.actions.setMessageAlert({
@@ -30,6 +33,7 @@ export default function Contact() {
         setLoading(false);
       })
       .catch((err) => {
+        console.log(err);
         dispatch(
           SystemReducer.actions.setMessageAlert({
             message:
@@ -54,12 +58,12 @@ export default function Contact() {
       )}
       <form
         onSubmit={(e) => handleSendMailToAdmin(e)}
-        className=" bg-white shadow rounded py-12 lg:px-28 px-8"
+        className=" bg-white w-full md:w-fit shadow rounded py-12 lg:px-28 px-8"
       >
         <p className="md:text-3xl text-xl font-bold leading-7 text-center text-gray-700">
-          Liên hệ với chúng tôi
+          Góp ý với chúng tôi
         </p>
-        <div className="md:flex items-center mt-12">
+        <div className="md:flex gap-4 items-center mt-12">
           <div className="md:w-72 flex flex-col">
             <label className="text-base font-semibold leading-none text-gray-800">
               Email
@@ -74,23 +78,7 @@ export default function Contact() {
               placeholder="Please input  name"
             />
           </div>
-          <div className="md:w-72 flex flex-col md:ml-6 md:mt-0 mt-4">
-            <label className="text-base font-semibold leading-none text-gray-800">
-              Mật khẩu
-            </label>
-            <input
-              tabIndex={0}
-              arial-label="Please input email address"
-              type="password"
-              required
-              name="pass"
-              className="text-base leading-none text-gray-900 p-3 focus:oultine-none focus:border-indigo-700 mt-4 bg-gray-100 border rounded border-gray-200 placeholder-gray-100"
-              placeholder="Please input email address"
-            />
-          </div>
-        </div>
-        <div className="md:flex items-center mt-8">
-          <div className="md:w-full flex flex-col">
+          <div className="md:w-full  flex flex-col">
             <label className="text-base font-semibold leading-none text-gray-800">
               Tên
             </label>
@@ -106,6 +94,7 @@ export default function Contact() {
             />
           </div>
         </div>
+
         <div>
           <div className="w-full flex flex-col mt-8">
             <label className="text-base font-semibold leading-none text-gray-800">
@@ -124,7 +113,10 @@ export default function Contact() {
           </div>
         </div>
         <div className="flex items-center justify-center w-full">
-          <button className="mt-9 text-base font-semibold leading-none text-white py-4 px-10 bg-primary rounded hover:opacity-[.8] focus:ring-2 focus:ring-offset-2 focus:ring-indigo-700 focus:outline-none">
+          <button
+            type="submit"
+            className="mt-9 text-base font-semibold leading-none text-white py-4 px-10 bg-primary rounded hover:opacity-[.8] focus:ring-2 focus:ring-offset-2 focus:ring-indigo-700 focus:outline-none"
+          >
             SUBMIT
           </button>
         </div>

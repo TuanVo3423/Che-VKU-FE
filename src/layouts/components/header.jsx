@@ -2,15 +2,16 @@ import {
   List,
   MagnifyingGlass,
   MagnifyingGlassPlus,
-  ShoppingCart,
+  Heart,
   UserCircle,
   DotsThreeCircle,
   House,
   X,
   Storefront,
-  Info,
   PhoneCall,
+  Phone,
   ClockCounterClockwise,
+  Info,
 } from "phosphor-react";
 import React, { useCallback, useState, useEffect } from "react";
 import { useSelector } from "react-redux";
@@ -24,20 +25,20 @@ const data = [
     isActive: true,
   },
   {
-    title: "Category",
-    icon: DotsThreeCircle,
+    title: "Về chúng tôi",
+    icon: Info,
     isActive: false,
-    path: "/shop",
+    path: "/about-me",
   },
   {
-    title: "Search",
-    icon: MagnifyingGlassPlus,
+    title: "Liên hệ",
+    icon: Phone,
     isActive: false,
-    path: "/",
+    path: "/contact-me",
   },
   {
-    title: "Cart",
-    icon: ShoppingCart,
+    title: "Danh sách yêu thích",
+    icon: Heart,
     isActive: false,
     path: "/cart",
   },
@@ -119,20 +120,20 @@ export default function Header() {
                     Trang chủ
                     <House size={24} weight="bold" />
                   </Link>
-                  <Link
+                  {/* <Link
                     to={"/shop"}
                     onClick={() => setIsShowMenuMobile(!isShowMenuMobile)}
                     className="flex items-center justify-between px-4 py-2 font-medium transition hover:bg-gray-100"
                   >
                     Shop
                     <Storefront size={24} weight="bold" />
-                  </Link>
+                  </Link> */}
                   <Link
                     to={"/about-me"}
                     onClick={() => setIsShowMenuMobile(!isShowMenuMobile)}
                     className="flex items-center justify-between px-4 py-2 font-medium transition hover:bg-gray-100"
                   >
-                    About Us
+                    Về chúng tôi
                     <Info size={24} weight="bold" />
                   </Link>
                   <Link
@@ -184,7 +185,7 @@ export default function Header() {
               <span className="absolute right-0 -top-2 w-5 h-5 rounded-full flex items-center justify-center bg-primary text-white text-xs">
                 {cartlist.length}
               </span>
-              <ShoppingCart size={24} weight="bold" />
+              <Heart size={24} weight="bold" />
               <p className="text-xs leading-3">Danh sách yêu thích</p>
             </Link>
             <Link

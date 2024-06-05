@@ -20,6 +20,42 @@ const data = [
     instagram: "https://instagram.com",
     img: "https://bwd2022.vercel.app/assets/member-2.jpg",
   },
+  {
+    name: "TRUONG BA VUONG",
+    role: "Web Developer",
+    des: "As part of the GenZ generation, I believe that there are not any impossible goals that go unrecognized. If we are consistent enough, the future is ours.",
+    github: "https://github.com/LilPhusc",
+    twitter: "https://twitter.com",
+    instagram: "https://instagram.com",
+    img: "../../images/avatar.png",
+  },
+  {
+    name: "LE MINH THE",
+    role: "Web Developer",
+    des: "As part of the GenZ generation, I believe that there are not any impossible goals that go unrecognized. If we are consistent enough, the future is ours.",
+    github: "https://github.com/LilPhusc",
+    twitter: "https://twitter.com",
+    instagram: "https://instagram.com",
+    img: "../../images/avatar.png",
+  },
+  {
+    name: "TRAN CONG BAO",
+    role: "Web Developer",
+    des: "As part of the GenZ generation, I believe that there are not any impossible goals that go unrecognized. If we are consistent enough, the future is ours.",
+    github: "https://github.com/LilPhusc",
+    twitter: "https://twitter.com",
+    instagram: "https://instagram.com",
+    img: "../../images/avatar.png",
+  },
+  {
+    name: "TON THAT RON",
+    role: "Web Developer",
+    des: "As part of the GenZ generation, I believe that there are not any impossible goals that go unrecognized. If we are consistent enough, the future is ours.",
+    github: "https://github.com/LilPhusc",
+    twitter: "https://twitter.com",
+    instagram: "https://instagram.com",
+    img: "../../images/avatar.png",
+  },
 ];
 export default function AboutMe() {
   return (

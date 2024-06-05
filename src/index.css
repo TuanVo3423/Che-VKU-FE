@@ -3,6 +3,15 @@
 @tailwind components;
 @tailwind utilities;
 
+body {
+  --plyr-color-main: #eb983e;
+  --plyr-video-background: white;
+}
+.plyr {
+  border-radius: 10px;
+  margin: 0;
+  height: 280px;
+}
 .slick-prev:before,
 .slick-next:before {
   content: "";

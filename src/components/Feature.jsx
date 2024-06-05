@@ -36,7 +36,7 @@ export default function Feature2() {
                   index === isHover
                     ? "bg-primary text-white border-primary"
                     : "bg-white text-primary border-primary"
-                } transition-all duration-500 flex flex-col items-center px-6 py-9 justify-center gap-y-1 text-base font-normal border-[1px] rounded-3xl cursor-pointer`}
+                } transition-all duration-500 flex flex-col items-center md:px-6 md:py-9 px-2 py-4 justify-center gap-y-1 text-base font-normal border-[1px] rounded-3xl cursor-pointer`}
               >
                 <p>{item.line1}</p>
                 <p>{item.line2}</p>

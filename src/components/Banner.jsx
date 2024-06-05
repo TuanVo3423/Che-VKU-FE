@@ -81,8 +81,8 @@ export default function Banner() {
   return (
     <div onMouseOver={onHoverBanner} onMouseOut={onOutHoverBanner}>
       <Slider {...settings}>
-        <div className="!block bg-cover w-full h-[70vh]  bg-no-repeat bg-center  bg-[url('https://nethue.com.vn/uploaded/_thumbs/%E1%BA%A3nh%202023/Mang%20v%E1%BB%81%20WENB%20v%C3%A0%20FB.jpg')]"></div>
-        <div className="!block bg-cover w-full h-[70vh]  bg-no-repeat bg-center  bg-[url('https://nethue.com.vn/uploaded/_thumbs/%E1%BA%A3nh%202023/Mang%20v%E1%BB%81%20WENB%20v%C3%A0%20FB.jpg')]"></div>
+        <div className="!block bg-cover w-full md:h-[80vh] h-[20vh]  bg-no-repeat bg-center  bg-[url('images/main_banner.jpg')]"></div>
+        <div className="!block bg-cover w-full md:h-[80vh] h-[20vh]  bg-no-repeat bg-center  bg-[url('images/main_banner.jpg')]"></div>
 
         {/* <div className="bg-cover bg-no-repeat bg-center py-36 relative bg-[url('../images/banner-02.png')]">
           <div className="container w-1/2">

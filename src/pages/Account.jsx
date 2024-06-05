@@ -5,7 +5,7 @@ import { AccountSelector } from "../redux/Selectors/Account";
 import { AccountReducer } from "../redux/Reducers/Account";
 import {
   ClockCounterClockwise,
-  ShoppingCart,
+  Heart,
   SignOut,
   UserFocus,
 } from "phosphor-react";
@@ -69,7 +69,7 @@ export default function Account() {
                 to={"/cart"}
                 className="flex gap-x-2 justify-start items-center medium capitalize text-gray-800 font-medium hover:text-primary transition"
               >
-                <ShoppingCart size={20} weight="bold" />
+                <Heart size={20} weight="bold" />
                 my cartlist
               </Link>
             </div>

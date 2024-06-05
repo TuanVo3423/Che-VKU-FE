@@ -2,11 +2,13 @@ import {
   ClockCounterClockwise,
   FacebookLogo,
   InstagramLogo,
-  ShoppingCart,
+  Heart,
   Star,
   TwitterLogo,
 } from "phosphor-react";
 import React, { useEffect, useState } from "react";
+import Plyr from "plyr-react";
+import "plyr-react/plyr.css";
 import { useDispatch, useSelector } from "react-redux";
 import CardProduct from "../components/CardProduct";
 import { AccountReducer } from "../redux/Reducers/Account";
@@ -16,8 +18,13 @@ import { ProductSelector } from "../redux/Selectors/Product";
 import { SystemReducer } from "../redux/Reducers/System";
 import { CommentReducer } from "../redux/Reducers/Comment";
 import Comments from "../components/Comments";
+import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
+import CheckBoxIcon from "@mui/icons-material/CheckBox";
+import RemoveIcon from "@mui/icons-material/Remove";
+import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import { useRef } from "react";
 import { CommentSelector } from "../redux/Selectors/Comment";
+import YouTube from "react-youtube";
 import { fetchComments } from "../api";
 import { Link } from "react-router-dom";
 export default function Detail() {
@@ -32,6 +39,19 @@ export default function Detail() {
   const dataDetail = data.filter((item, index) => {
     return item._id === idDetail;
   });
+  const onPlayerReady = (event) => {
+    // access to player in all event handlers via event.target
+    event.target.pauseVideo();
+  };
+
+  const opts = {
+    height: "300",
+    width: "600",
+    playerVars: {
+      // https://developers.google.com/youtube/player_parameters
+      autoplay: 1,
+    },
+  };
 
   const handleComment = () => {
     const content = areaRef.current.value;
@@ -190,8 +210,10 @@ export default function Detail() {
                 <span className="text-green-600">In Stock</span>
               </p> */}
               <p className="space-x-2">
-                <span className="text-gray-800 font-semibold">Category: </span>
-                <span className="text-gray-600">chè truyền thống</span>
+                <span className="text-gray-800 font-semibold">Loại: </span>
+                <span className="text-gray-600 text-md font-semibold">
+                  chè truyền thống
+                </span>
               </p>
             </div>
             <div className="mt-4 flex items-baseline gap-3">
@@ -200,8 +222,11 @@ export default function Detail() {
               </span>
               {/* <span className="text-gray-500 text-base line-through">$500.00</span> */}
             </div>
-            <p className="mt-4 text-gray-600">
+            <p className="mt-4 text-md font-semibold text-gray-600">
               {dataDetail[0].shortDescription}
+            </p>
+            <p className="mt-4 text-md font-semibold text-gray-600">
+              {dataDetail[0].detailDescription.split("$")[0]}s
             </p>
             {/* size */}
             {/* size end */}
@@ -290,7 +315,7 @@ export default function Detail() {
                       hover:bg-transparent hover:text-primary transition text-sm flex items-center"
               >
                 <span className="mr-2">
-                  <ShoppingCart size={20} weight="bold" />
+                  <Heart size={20} weight="bold" />
                 </span>{" "}
                 Thêm vào yêu thích
               </a>
@@ -308,9 +333,39 @@ export default function Detail() {
             {/* Thêm vào yêu thích button end */}
             {/* product share icons */}
             <div className="flex space-x-3 mt-4 cursor-pointer">
-              <FacebookLogo size={32} weight="fill" className="text-primary" />
-              <TwitterLogo size={32} weight="bold" className="text-primary" />
-              <InstagramLogo size={32} weight="fill" className="text-primary" />
+              <FacebookLogo
+                cursor="pointer"
+                onClick={() =>
+                  window.open(
+                    "https://www.facebook.com/profile.php?id=61560765143462&locale=vi_VN"
+                  )
+                }
+                size={32}
+                weight="fill"
+                className="text-primary"
+              />
+              <TwitterLogo
+                cursor="pointer"
+                onClick={() =>
+                  window.open(
+                    "https://www.facebook.com/profile.php?id=61560765143462&locale=vi_VN"
+                  )
+                }
+                size={32}
+                weight="bold"
+                className="text-primary"
+              />
+              <InstagramLogo
+                cursor="pointer"
+                onClick={() =>
+                  window.open(
+                    "https://www.facebook.com/profile.php?id=61560765143462&locale=vi_VN"
+                  )
+                }
+                size={32}
+                weight="fill"
+                className="text-primary"
+              />
             </div>
             {/* product share icons end */}
           </div>
@@ -321,14 +376,69 @@ export default function Detail() {
         <div className="container pb-16">
           {/* detail buttons */}
           <h3 className="border-b border-gray-200 font-roboto text-gray-800 pb-3 font-bold text-2xl">
-            Thông tin thêm
+            Thành phần
+          </h3>
+          {/* details button end */}
+          {/* details content */}
+          <div className="flex md:flex-row flex-col w-full pt-6">
+            <div className="space-y-3 md:w-1/2 w-full text-gray-600">
+              <p className=" font-roboto text-gray-600 pb-3 font-medium">
+                {dataDetail[0].ingredients &&
+                  dataDetail[0]?.ingredients?.split("$").map((item, index) => (
+                    <div className="flex items-center gap-4">
+                      <CheckBoxIcon style={{ color: "#eb983e" }} />
+                      <p
+                        key={index}
+                        className=" font-roboto text-gray-600  font-medium"
+                      >
+                        {item}
+                      </p>
+                    </div>
+                  ))}
+              </p>
+
+              {/* <div className="w-full h-[2px] bg-gray-600 text-gray-600"></div> */}
+            </div>
+            <div className="md:w-1/2 w-full">
+              <Plyr
+                source={{
+                  type: "video",
+                  sources: [
+                    {
+                      src: `${dataDetail[0].videoId}`,
+                      provider: "youtube",
+                    },
+                  ],
+                }}
+              />
+              {/* <YouTube
+                videoId={dataDetail[0].videoId}
+                opts={opts}
+                onReady={onPlayerReady}
+              /> */}
+            </div>
+          </div>
+
+          <h3 className="border-b mt-4 border-gray-200 font-roboto text-gray-800 pb-3 font-bold text-2xl">
+            Cách làm
           </h3>
           {/* details button end */}
           {/* details content */}
           <div className="w-full pt-6">
             <div className="space-y-3 text-gray-600">
-              <p className="border-b border-gray-200 font-roboto text-gray-600 pb-3 font-medium">
-                {dataDetail[0].detailDescription.split("$")[0]}
+              <p className="flex flex-col gap-4 border-b border-gray-200 font-roboto text-gray-600 pb-3 font-medium">
+                {dataDetail[0].instructions &&
+                  dataDetail[0]?.instructions?.split("$").map((item, index) => (
+                    <div className="flex items-center gap-4">
+                      <CheckCircleIcon style={{ color: "#eb983e" }} />
+                      <p
+                        key={index}
+                        className=" font-roboto text-gray-600  font-medium"
+                      >
+                        {item}
+                      </p>
+                    </div>
+                  ))}
               </p>
 
               {/* <div className="w-full h-[2px] bg-gray-600 text-gray-600"></div> */}
@@ -338,12 +448,12 @@ export default function Detail() {
           <div className="w-full pt-6">
             <div className="space-y-3 text-gray-600">
               <p className="border-b border-gray-200 font-roboto text-gray-600 pb-3 font-bold text-2xl">
-                Comment ({comments.length})
+                Bình luận ({comments.length})
               </p>
             </div>
             {/* list comment */}
             <div>
-              <div className="max-h-[700px] overflow-auto">
+              <div className="max-h-[500px] overflow-auto">
                 {comments.map((comment, index) => {
                   return (
                     <Comments
@@ -356,7 +466,7 @@ export default function Detail() {
                 })}
               </div>
               <div>
-                <h2 className="text-lg lg:text-2xl font-bold text-gray-900 dark:text-white">
+                <h2 className="text-lg lg:text-2xl mb-4 font-bold text-gray-900 dark:text-white">
                   Hãy nêu lên đánh giá của bạn
                 </h2>
                 <form className="mb-6">

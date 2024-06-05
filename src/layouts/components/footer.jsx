@@ -12,10 +12,46 @@ const Footer = () => {
     <footer className="text-center text-white bg-primary">
       <div className="container pt-9">
         <div className="flex gap-x-10 justify-center mb-9">
-          <FacebookLogo size={28} weight="fill" />
-          <TwitterLogo size={28} weight="fill" />
-          <InstagramLogo size={28} weight="fill" />
-          <GoogleLogo size={28} weight="fill" />
+          <FacebookLogo
+            cursor="pointer"
+            onClick={() =>
+              window.open(
+                "https://www.facebook.com/profile.php?id=61560765143462&locale=vi_VN"
+              )
+            }
+            size={28}
+            weight="fill"
+          />
+          <TwitterLogo
+            cursor="pointer"
+            onClick={() =>
+              window.open(
+                "https://www.facebook.com/profile.php?id=61560765143462&locale=vi_VN"
+              )
+            }
+            size={28}
+            weight="fill"
+          />
+          <InstagramLogo
+            cursor="pointer"
+            onClick={() =>
+              window.open(
+                "https://www.facebook.com/profile.php?id=61560765143462&locale=vi_VN"
+              )
+            }
+            size={28}
+            weight="fill"
+          />
+          <GoogleLogo
+            cursor="pointer"
+            onClick={() =>
+              window.open(
+                "https://www.facebook.com/profile.php?id=61560765143462&locale=vi_VN"
+              )
+            }
+            size={28}
+            weight="fill"
+          />
         </div>
       </div>
       <div
