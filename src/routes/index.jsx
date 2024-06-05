@@ -55,7 +55,7 @@ export const publicRoutes = [
   {
     path: routes.checkout,
     component: Checkout,
-    title: "Checkout",
+    title: "Đặt hàng",
     isShowBreadcrum: true,
   },
   {

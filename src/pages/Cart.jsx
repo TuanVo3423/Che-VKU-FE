@@ -211,15 +211,15 @@ export default function Cart() {
         </div> */}
         {/* searchbar end */}
         {/* checkout */}
-        {/* <Link
+        <Link
           to={cartlist.length !== 0 ? "/checkout" : "/cart"}
           className={`bg-primary border  border-primary text-white px-4 py-3 font-medium rounded-md uppercase hover:bg-transparent
           hover:text-primary transition text-sm w-full block text-center ${
             isEmptyCartList && "cursor-not-allowed"
           }`}
         >
-          Tiến hành đặt hàng 
-        </Link> */}
+          Tiến hành đặt hàng
+        </Link>
         {/* checkout end */}
       </div>
       {/* order summary end */}

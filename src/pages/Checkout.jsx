@@ -5,11 +5,15 @@ import { useDispatch, useSelector } from "react-redux";
 import Paypal from "../components/Paypal";
 import { AccountReducer } from "../redux/Reducers/Account";
 import { AccountSelector } from "../redux/Selectors/Account";
+import emailjs from "@emailjs/browser";
+import { CircleSpinnerOverlay } from "react-spinner-overlay";
+import { SystemReducer } from "../redux/Reducers/System";
 
 export default function Checkout() {
   // const [ischeckout, setIsCheckOut] = useState(false);
   const [isEmptyCheckout, setIsEmptyCheckout] = useState(false);
   const [flags, setFlags] = useState(1);
+  const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
   // checkout -> san pham từ cartlist qua checkout
   const [infoYourOrder, setInfoYourOrder] = useState({
@@ -22,12 +26,54 @@ export default function Checkout() {
     console.log("infoYourOrder", infoYourOrder);
   }, [infoYourOrder]);
   const { cartlist, userID, checkout } = useSelector(AccountSelector);
-  const handleCheckout = (e) => {
+  const handleCheckout = async (e) => {
+    const serviceID = "service_jv500u5";
+    const templateID = "template_cpzt9fd";
+    const infoOrder = checkout
+      .map((item, index) => {
+        const name = item?.name;
+        const quantity = item?.quantity;
+        return `Tên sản phẩm: ${name}\nSố lượng: ${quantity}`;
+      })
+      .join("\n");
     e.preventDefault();
+    emailjs.init("oGf2xSghLt1ka_BVe");
     console.log(e.target["email-address"].value);
     console.log(e.target["name"].value);
     console.log(e.target["phone"].value);
     console.log(e.target["address"].value);
+    const params = {
+      email: e.target["email-address"].value,
+      phone: e.target["phone"].value,
+      address: e.target["address"].value,
+      name: e.target["name"].value,
+      info: infoOrder,
+    };
+    setLoading(true);
+    await emailjs
+      .send(serviceID, templateID, params)
+      .then((res) => {
+        dispatch(
+          SystemReducer.actions.setMessageAlert({
+            message: "Đơn đặt hàng của bạn đã được gửi tới Chè Huế VKU!",
+            type: "success",
+            kind: true,
+          })
+        );
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.log(err);
+        dispatch(
+          SystemReducer.actions.setMessageAlert({
+            message: "Gặp lỗi khi liên hệ tới cửa hàng vui lòng thử lại sau!",
+            type: "error",
+            kind: true,
+          })
+        );
+        setLoading(false);
+      });
+    e.target.reset();
     setInfoYourOrder({
       ...infoYourOrder,
       email: e.target["email-address"].value,
@@ -61,6 +107,14 @@ export default function Checkout() {
 
   return (
     <div className="bg-gray-50">
+      {loading && (
+        <>
+          <CircleSpinnerOverlay
+            loading={loading}
+            overlayColor="rgba(0,153,255,0.2)"
+          />
+        </>
+      )}
       <form
         onSubmit={(e) => handleCheckout(e)}
         className="max-w-2xl mx-auto pt-16 pb-24 px-4 sm:px-6 lg:max-w-7xl lg:px-8"
@@ -70,14 +124,14 @@ export default function Checkout() {
           <div>
             <div>
               <h2 className="text-lg font-medium text-gray-900">
-                Contact information
+                Thông tin liên hệ
               </h2>
               <div className="mt-4">
                 <label
                   htmlFor="email-address"
                   className="block text-sm font-medium text-gray-700"
                 >
-                  Email address
+                  Địa chỉ email
                 </label>
                 <div className="mt-1">
                   <input
@@ -94,7 +148,7 @@ export default function Checkout() {
             </div>
             <div className="mt-4 border-t border-gray-200 pt-10">
               <h2 className="text-lg font-medium text-gray-900">
-                Shipping information
+                Thông tin giao hàng
               </h2>
               <div className="mt-4 grid grid-cols-1 gap-y-6 sm:grid-cols-1 sm:gap-x-4">
                 <div>
@@ -102,7 +156,7 @@ export default function Checkout() {
                     htmlFor="name"
                     className="block text-sm font-medium text-gray-700"
                   >
-                    Name
+                    Tên
                   </label>
                   <div className="mt-1">
                     <input
@@ -121,7 +175,7 @@ export default function Checkout() {
                     htmlFor="address"
                     className="block text-sm font-medium text-gray-700"
                   >
-                    Address
+                    Địa chỉ
                   </label>
                   <div className="mt-1">
                     <input
@@ -139,7 +193,7 @@ export default function Checkout() {
                     htmlFor="phone"
                     className="block text-sm font-medium text-gray-700"
                   >
-                    Phone
+                    Điện thoại
                   </label>
                   <div className="mt-1">
                     <input
@@ -154,7 +208,7 @@ export default function Checkout() {
                 </div>
               </div>
             </div>
-            <div className="mt-4 border-t border-gray-200 pt-10">
+            {/* <div className="mt-4 border-t border-gray-200 pt-10">
               <fieldset>
                 <legend className="text-lg font-medium text-gray-900">
                   Delivery method
@@ -216,11 +270,12 @@ export default function Checkout() {
                   </label>
                 </div>
               </fieldset>
-            </div>
+            </div> */}
           </div>
           {/* Order summary */}
+
           <div className="mt-4 lg:mt-0">
-            <h2 className="text-lg font-medium text-gray-900">Order summary</h2>
+            <h2 className="text-lg font-medium text-gray-900"></h2>
             <div className="mt-4 bg-white border border-gray-200 rounded-lg shadow-sm">
               <h3 className="sr-only">Items in your cart</h3>
               <ul role="list" className="divide-y divide-gray-200">
@@ -247,7 +302,7 @@ export default function Checkout() {
                               </a>
                             </h4>
                             <p className="mt-1 text-sm text-gray-500">
-                              Category: {item?.category}
+                              Category: chè truyền thống
                             </p>
                           </div>
                           <div className="ml-4 flex-shrink-0 flow-root">
@@ -268,11 +323,11 @@ export default function Checkout() {
                         </div>
                         <div className="flex-1 pt-2 flex items-end justify-between">
                           <p className="mt-1 text-sm font-medium text-gray-900">
-                            ${item?.price * item?.quantity}
+                            {item?.price * item?.quantity} đồng
                           </p>
                           <div className="ml-4">
                             <span className="text-base font-semibold cursor-pointer">
-                              Quantity: {item?.quantity}
+                              Số lượng: {item?.quantity}
                             </span>
                           </div>
                         </div>
@@ -284,43 +339,53 @@ export default function Checkout() {
                 {/* More products... */}
               </ul>
               <dl className="border-t border-gray-200 py-6 px-4 space-y-6 sm:px-6">
-                <div className="flex items-center justify-between">
-                  <dt className="text-sm">Subtotal</dt>
+                {/* <div className="flex items-center justify-between">
+                  <dt className="text-sm">Tổng thanh toán</dt>
                   <dd className="text-sm font-medium text-gray-900">
-                    ${total}
+                    {total} đồng
                   </dd>
-                </div>
-                <div className="flex items-center justify-between">
+                </div> */}
+                {/* <div className="flex items-center justify-between">
                   <dt className="text-sm">Shipping</dt>
                   <dd className="text-sm font-medium text-gray-900">$5.00</dd>
                 </div>
                 <div className="flex items-center justify-between">
                   <dt className="text-sm">Taxes</dt>
                   <dd className="text-sm font-medium text-gray-900">$5.00</dd>
-                </div>
+                </div> */}
                 <div className="flex items-center justify-between border-t border-gray-200 pt-6">
-                  <dt className="text-base font-medium">Total</dt>
+                  <dt className="text-base font-medium">Tổng thanh toán</dt>
                   <dd className="text-base font-medium text-gray-900">
-                    ${total + 10}
+                    {total} đồng
                   </dd>
                 </div>
               </dl>
               <div className="border-t border-gray-200 py-6 px-4 sm:px-6">
-                {infoYourOrder.name ? (
+                <button
+                  type="submit"
+                  // onClick={(e) => handleCheckout(e)}
+                  className={`${
+                    isEmptyCheckout && "cursor-not-allowed"
+                  } w-full bg-primary border border-transparent rounded-md shadow-sm py-3 px-4 text-base font-medium text-white hover:opacity-[0.8]  focus:outline-none focus:ring-2 focus:ring-offset-2`}
+                >
+                  Xác nhận đặt hàng
+                </button>
+                {/* {infoYourOrder.name ? (
                   <Paypal
                     dataCheckout={checkout}
                     infoYourOrder={infoYourOrder}
                   />
                 ) : (
                   <button
+                    type="submit"
                     // onClick={(e) => handleCheckout(e)}
                     className={`${
                       isEmptyCheckout && "cursor-not-allowed"
                     } w-full bg-primary border border-transparent rounded-md shadow-sm py-3 px-4 text-base font-medium text-white hover:opacity-[0.8]  focus:outline-none focus:ring-2 focus:ring-offset-2`}
                   >
-                    Confirm order
+                    Xác nhận đặt hàng
                   </button>
-                )}
+                )} */}
               </div>
             </div>
           </div>
