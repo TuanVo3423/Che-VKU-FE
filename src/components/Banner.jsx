@@ -81,8 +81,8 @@ export default function Banner() {
   return (
     <div onMouseOver={onHoverBanner} onMouseOut={onOutHoverBanner}>
       <Slider {...settings}>
-        <div className="!block bg-cover w-full md:h-[80vh] h-[20vh]  bg-no-repeat bg-center  bg-[url('images/main_banner.jpg')]"></div>
-        <div className="!block bg-cover w-full md:h-[80vh] h-[20vh]  bg-no-repeat bg-center  bg-[url('images/main_banner.jpg')]"></div>
+        <div className="!block bg-cover w-full md:h-[80vh] h-[20vh]  bg-no-repeat bg-center  bg-[url('https://res.cloudinary.com/dftz2tmpm/image/upload/v1717647250/nerkqlppk6yoc0kkucfi.jpg')]"></div>
+        <div className="!block bg-cover w-full md:h-[80vh] h-[20vh]  bg-no-repeat bg-center  bg-[url('https://res.cloudinary.com/dftz2tmpm/image/upload/v1717647250/nerkqlppk6yoc0kkucfi.jpg')]"></div>
 
         {/* <div className="bg-cover bg-no-repeat bg-center py-36 relative bg-[url('../images/banner-02.png')]">
           <div className="container w-1/2">
